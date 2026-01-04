@@ -1,27 +1,30 @@
 def build_monoalphabetic_map(key):
-    key = key.upper()[::-1]  # reverse key
+    key = key.upper()[::-1]
     seen = set()
-    mapping_sequence = []
+    seq = []
 
-    # add reversed key characters
     for ch in key:
         if ch not in seen:
             seen.add(ch)
-            mapping_sequence.append(ch)
+            seq.append(ch)
 
-    # add remaining alphabet
     for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
         if ch not in seen:
-            mapping_sequence.append(ch)
+            seq.append(ch)
 
-    # build mapping dictionary
-    mapping = {}
-    for i, ch in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
-        mapping[ch] = mapping_sequence[i]
-
-    return mapping
+    return dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", seq))
 
 
 def monoalphabetic_encrypt(text, key):
+    print("\n--- STEP 2: Monoalphabetic Substitution ---")
+    print("Input Text:", text)
+
     mapping = build_monoalphabetic_map(key)
-    return ''.join(mapping[ch] for ch in text)
+    print("Substitution Mapping:")
+    for k, v in mapping.items():
+        print(f"{k} → {v}", end=" | ")
+    print("\n")
+
+    result = ''.join(mapping[ch] for ch in text)
+    print("Output after Substitution:", result)
+    return result
